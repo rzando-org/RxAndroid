@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.vanniktech.maven.publish'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.sourceCompatibility
+        targetCompatibility rootProject.ext.sourceCompatibility
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    api 'io.reactivex.rxjava3:rxjava:3.1.5'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.2.1'
+}
+
+signing {
+    def signingKey = findProperty('signingKey')
+    def signingPassword = findProperty('signingPassword')
+    useInMemoryPgpKeys(signingKey, signingPassword)
+}

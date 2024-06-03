@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    tasks.withType(Test).configureEach {
+        testLogging {
+            if (System.getenv("CI") == "true") {
+                events = ["failed", "skipped", "passed"]
+            }
+            exceptionFormat "full"
+        }
+    }
+}
+
+ext {
+    minSdkVersion = 9
+    compileSdkVersion = 31
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
